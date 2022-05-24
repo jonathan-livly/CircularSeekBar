@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 
 // Define some common closures (methods) for code share
 ext.getTagCount = {
@@ -29,6 +30,10 @@ android {
             minifyEnabled false
             setProperty("archivesBaseName", "CircularSeekBar-demo-${defaultConfig.versionName}")
         }
+    }
+
+    dataBinding {
+        enabled true
     }
 }
 

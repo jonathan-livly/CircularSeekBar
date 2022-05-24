@@ -29,17 +29,13 @@ package me.tankery.lib.circularseekbar
 
 import android.content.Context
 import android.content.res.TypedArray
-import android.graphics.Paint
-import android.graphics.Path
+import android.databinding.BindingAdapter
+import android.graphics.*
 import android.graphics.Paint.Cap
-import android.graphics.RectF
-import android.graphics.Color
-import android.graphics.BlurMaskFilter
-import android.graphics.PathMeasure
-import android.graphics.Canvas
 import android.os.Build
 import android.os.Bundle
 import android.os.Parcelable
+import android.support.annotation.ColorInt
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
@@ -1229,7 +1225,7 @@ class CircularSeekBar @JvmOverloads constructor(
          */
         private const val PROGRESS_GLOW_RADIUS_DP = 5f
 
-        // Default values
+        //region Default values
         private val DEFAULT_CIRCLE_STYLE = Cap.ROUND.ordinal
         private const val DEFAULT_CIRCLE_X_RADIUS = 30f
         private const val DEFAULT_CIRCLE_Y_RADIUS = 30f
@@ -1260,5 +1256,191 @@ class CircularSeekBar @JvmOverloads constructor(
         private const val DEFAULT_NEGATIVE_ENABLED = false
         private const val DEFAULT_DISABLE_PROGRESS_GLOW = true
         private const val DEFAULT_CS_HIDE_PROGRESS_WHEN_EMPTY = false
+        //endregion
+
+        //region Data Binding methods
+        @JvmStatic
+        @BindingAdapter("cs_circle_style")
+        fun setCircleStyle(seekBar: CircularSeekBar, style: Cap?) {
+            seekBar.circleStyle = style ?: return
+        }
+
+        @JvmStatic
+        @BindingAdapter("cs_progress")
+        fun setProgress(seekBar: CircularSeekBar, progress: Int?) {
+            seekBar.progress = progress?.toFloat() ?: return
+        }
+
+        @JvmStatic
+        @BindingAdapter("cs_max")
+        fun setMax(seekBar: CircularSeekBar, max: Int?) {
+            seekBar.max = max?.toFloat() ?: return
+        }
+
+        @JvmStatic
+        @BindingAdapter("cs_negative_enabled")
+        fun setNegativeEnabled(seekBar: CircularSeekBar, isNegativeEnabled: Boolean?) {
+            seekBar.isNegativeEnabled = isNegativeEnabled ?: return
+        }
+
+        @JvmStatic
+        @BindingAdapter("cs_move_outside_circle")
+        fun setMoveOutsideCircle(seekBar: CircularSeekBar, moveOutsideCircle: Boolean?) {
+            seekBar.moveOutsideCircle = moveOutsideCircle ?: return
+        }
+
+        @JvmStatic
+        @BindingAdapter("cs_maintain_equal_circle")
+        fun setMaintainEqualCircle(seekBar: CircularSeekBar, maintainEqualCircle: Boolean?) {
+            seekBar.maintainEqualCircle = maintainEqualCircle ?: return
+        }
+
+        @JvmStatic
+        @BindingAdapter("cs_use_custom_radii")
+        fun setWillUseCustomRadii(seekBar: CircularSeekBar, willUseCustomRadii: Boolean?) {
+            seekBar.customRadii = willUseCustomRadii ?: return
+        }
+
+        @JvmStatic
+        @BindingAdapter("cs_lock_enabled")
+        fun setLockEnabled(seekBar: CircularSeekBar, isLockEnabled: Boolean?) {
+            seekBar.isLockEnabled = isLockEnabled ?: return
+        }
+
+        @JvmStatic
+        @BindingAdapter("cs_circle_x_radius")
+        fun setCircleXRadius(seekBar: CircularSeekBar, circleXRadiusPixels: Float?) {
+            seekBar.circleXRadius = circleXRadiusPixels ?: return
+        }
+
+        @JvmStatic
+        @BindingAdapter("cs_circle_y_radius")
+        fun setCircleYRadius(seekBar: CircularSeekBar, circleYRadiusPixels: Float?) {
+            seekBar.circleYRadius = circleYRadiusPixels ?: return
+        }
+
+        @JvmStatic
+        @BindingAdapter("cs_circle_stroke_width")
+        fun set(seekBar: CircularSeekBar, circleStrokeWidthPixels: Float?) {
+            seekBar.circleStrokeWidth = circleStrokeWidthPixels ?: return
+        }
+
+        @JvmStatic
+        @BindingAdapter("cs_disable_pointer")
+        fun setDisablePointer(seekBar: CircularSeekBar, willDisablePointer: Boolean?) {
+            seekBar.disablePointer = willDisablePointer ?: return
+        }
+
+        @JvmStatic
+        @BindingAdapter("cs_pointer_stroke_width")
+        fun setPointerStrokeWidth(seekBar: CircularSeekBar, pointerStrokeWidthPixels: Float?) {
+            seekBar.pointerStrokeWidth = pointerStrokeWidthPixels ?: return
+        }
+
+        @JvmStatic
+        @BindingAdapter("cs_pointer_halo_width")
+        fun setPointerHaloWidth(seekBar: CircularSeekBar, pointerHaloWidthPixels: Float?) {
+            seekBar.pointerHaloWidth = pointerHaloWidthPixels ?: return
+        }
+
+        @JvmStatic
+        @BindingAdapter("cs_pointer_halo_border_width")
+        fun setPointerHaloBorderWidth(
+            seekBar: CircularSeekBar,
+            pointerHaloBorderWidthPixels: Float?
+        ) {
+            seekBar.pointerHaloBorderWidth = pointerHaloBorderWidthPixels ?: return
+        }
+
+        @JvmStatic
+        @BindingAdapter("cs_circle_fill")
+        fun setCircleFillColor(seekBar: CircularSeekBar, @ColorInt color: Int?) {
+            seekBar.circleFillColor = color ?: return
+        }
+
+        @JvmStatic
+        @BindingAdapter("cs_circle_color")
+        fun setCircleColor(seekBar: CircularSeekBar, @ColorInt color: Int?) {
+            seekBar.circleColor = color ?: return
+        }
+
+        @JvmStatic
+        @BindingAdapter("cs_circle_progress_color")
+        fun setCircleProgressColor(seekBar: CircularSeekBar, @ColorInt color: Int?) {
+            seekBar.circleProgressColor = color ?: return
+        }
+
+        @JvmStatic
+        @BindingAdapter("cs_pointer_color")
+        fun setPointerColor(seekBar: CircularSeekBar, @ColorInt color: Int?) {
+            seekBar.pointerColor = color ?: return
+        }
+
+        @JvmStatic
+        @BindingAdapter("cs_pointer_fill_color")
+        fun setPointerFillColor(seekBar: CircularSeekBar, @ColorInt color: Int?) {
+            seekBar.pointerFillColor = color ?: return
+        }
+
+        @JvmStatic
+        @BindingAdapter("cs_pointer_fill_inner_stroke_width")
+        fun setPointerFillInnerStrokeWidth(
+            seekBar: CircularSeekBar,
+            pointerFillInnerStrokeWidthPixels: Float?
+        ) {
+            seekBar.pointerFillInnerStrokeWidth = pointerFillInnerStrokeWidthPixels ?: return
+        }
+
+        @JvmStatic
+        @BindingAdapter("cs_pointer_halo_color")
+        fun setPointerHaloColor(seekBar: CircularSeekBar, @ColorInt color: Int?) {
+            seekBar.pointerHaloColor = color ?: return
+        }
+
+        @JvmStatic
+        @BindingAdapter("cs_pointer_halo_color_ontouch")
+        fun setPointerHaloColorOnTouch(seekBar: CircularSeekBar, @ColorInt color: Int?) {
+            seekBar.pointerHaloColorOnTouch = color ?: return
+        }
+
+        @JvmStatic
+        @BindingAdapter("cs_pointer_alpha_ontouch")
+        fun setPointerAlphaOnTouch(seekBar: CircularSeekBar, pointerAlphaOnTouch: Int?) {
+            seekBar.pointerAlphaOnTouch = pointerAlphaOnTouch ?: return
+        }
+
+        @JvmStatic
+        @BindingAdapter("cs_pointer_angle")
+        fun setPointerAngle(seekBar: CircularSeekBar, pointerAngle: Float?) {
+            seekBar.pointerAngle = pointerAngle ?: return
+        }
+
+        @JvmStatic
+        @BindingAdapter("cs_start_angle")
+        fun setStartAngle(seekBar: CircularSeekBar, angle: Float?) {
+            seekBar.startAngle = angle ?: return
+        }
+
+        @JvmStatic
+        @BindingAdapter("cs_end_angle")
+        fun setEndAngle(seekBar: CircularSeekBar, angle: Float?) {
+            seekBar.endAngle = angle ?: return
+        }
+
+        @JvmStatic
+        @BindingAdapter("cs_disable_progress_glow")
+        fun setDisableProgressGlow(seekBar: CircularSeekBar, willDisableProgressGlow: Boolean?) {
+            seekBar.disableProgressGlow = willDisableProgressGlow ?: return
+        }
+
+        @JvmStatic
+        @BindingAdapter("cs_hide_progress_when_empty")
+        fun setHideProgressWhenEmpty(
+            seekBar: CircularSeekBar,
+            willHideProgressWhenEmpty: Boolean?
+        ) {
+            seekBar.hideProgressWhenEmpty = willHideProgressWhenEmpty ?: return
+        }
+        //endregion
     }
 }
