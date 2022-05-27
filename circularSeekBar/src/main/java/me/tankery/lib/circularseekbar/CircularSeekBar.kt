@@ -144,7 +144,25 @@ class CircularSeekBar @JvmOverloads constructor(
     /**
      * If disable pointer, we can't seek the progress.
      */
-    private var disablePointer = false
+    var disablePointer: Boolean = false
+        set(isDisabled) {
+            field = isDisabled
+            initPaints()
+            recalculateAll()
+            invalidate()
+        }
+
+    /**
+     * Hides the pointer when [disablePointer] is set
+     * Prevents a resize of the circle to the bounds
+     */
+    var hidePointerWhenDisabled: Boolean = false
+        set(willHide) {
+            field = willHide
+            initPaints()
+            recalculateAll()
+            invalidate()
+        }
 
     /**
      * The radius of the pointer (in pixels).
@@ -667,6 +685,10 @@ class CircularSeekBar @JvmOverloads constructor(
             R.styleable.cs_CircularSeekBar_cs_hide_progress_when_empty,
             DEFAULT_CS_HIDE_PROGRESS_WHEN_EMPTY
         )
+        hidePointerWhenDisabled = attrArray.getBoolean(
+            R.styleable.cs_CircularSeekBar_cs_hide_pointer_when_disabled,
+            DEFAULT_CS_HIDE_POINTER_WHEN_DISABLED
+        )
 
         // Modulo 360 right now to avoid constant conversion
         startAngle = (360f + attrArray.getFloat(
@@ -695,11 +717,19 @@ class CircularSeekBar @JvmOverloads constructor(
         if (pointerAngle == 0f) {
             pointerAngle = SMALL_DEGREE_BIAS
         }
+
         if (disablePointer) {
-            pointerStrokeWidth = 0f
-            pointerFillInnerStrokeWidth = 0f
-            pointerHaloWidth = 0f
-            pointerHaloBorderWidth = 0f
+            if (hidePointerWhenDisabled) {
+                pointerColor = HIDDEN_POINTER_COLOR
+                pointerFillColor = HIDDEN_POINTER_COLOR
+                pointerHaloColor = HIDDEN_POINTER_COLOR
+                pointerHaloColorOnTouch = HIDDEN_POINTER_COLOR
+            } else {
+                pointerStrokeWidth = 0f
+                pointerFillInnerStrokeWidth = 0f
+                pointerHaloWidth = 0f
+                pointerHaloBorderWidth = 0f
+            }
         }
     }
 
@@ -1256,6 +1286,8 @@ class CircularSeekBar @JvmOverloads constructor(
         private const val DEFAULT_NEGATIVE_ENABLED = false
         private const val DEFAULT_DISABLE_PROGRESS_GLOW = true
         private const val DEFAULT_CS_HIDE_PROGRESS_WHEN_EMPTY = false
+        private const val DEFAULT_CS_HIDE_POINTER_WHEN_DISABLED = false
+        private const val HIDDEN_POINTER_COLOR = Color.TRANSPARENT
         //endregion
 
         //region Data Binding methods
@@ -1440,6 +1472,15 @@ class CircularSeekBar @JvmOverloads constructor(
             willHideProgressWhenEmpty: Boolean?
         ) {
             seekBar.hideProgressWhenEmpty = willHideProgressWhenEmpty ?: return
+        }
+
+        @JvmStatic
+        @BindingAdapter("cs_hide_pointer_when_disabled")
+        fun setHidePointerWhenDisabled(
+            seekBar: CircularSeekBar,
+            willHide: Boolean?
+        ) {
+            seekBar.hidePointerWhenDisabled = willHide ?: return
         }
         //endregion
     }

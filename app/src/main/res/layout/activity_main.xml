@@ -169,7 +169,6 @@
                 <TableRow>
 
                     <LinearLayout android:orientation="vertical">
-
                         <me.tankery.lib.circularseekbar.CircularSeekBar
                             android:layout_width="@dimen/seekbar_size_small"
                             android:layout_height="wrap_content"
@@ -193,6 +192,32 @@
                             android:gravity="center_horizontal"
                             android:text="@string/example_description_data_binding" />
                     </LinearLayout>
+
+                    <LinearLayout android:orientation="vertical">
+
+                        <me.tankery.lib.circularseekbar.CircularSeekBar
+                            android:layout_width="@dimen/seekbar_size_small"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="@dimen/seekbar_margin"
+                            android:layout_marginLeft="@dimen/seekbar_margin"
+                            android:layout_marginRight="@dimen/seekbar_margin"
+                            app:cs_progress="60"
+                            app:cs_negative_enabled="false"
+                            app:cs_circle_style="square"
+                            app:cs_circle_stroke_width="8dp"
+                            app:cs_pointer_stroke_width="24dp"
+                            app:cs_pointer_halo_width="@dimen/seekbar_holo_width"
+                            app:cs_disable_pointer="true"
+                            app:cs_hide_pointer_when_disabled="true" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:text="Square, negative disabled\nhidden pointer" />
+                    </LinearLayout>
+
                 </TableRow>
 
             </TableLayout>
